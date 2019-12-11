@@ -92,7 +92,7 @@ const NavBar = ({ mobileOpen, handleDrawerToggle }) => {
       <Divider />
       <List>
         {OptionList.map((text, index) => (
-          <VisualComponent id={text} name={text} />
+          <VisualComponent key={text} name={text} />
         ))}
       </List>
     </div>
