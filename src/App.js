@@ -10,7 +10,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // TODO: Create a separate file for this
 import Blue from '@material-ui/core/colors/blue';
 import Green from '@material-ui/core/colors/green';
-import Container from '@material-ui/core/Container';
+
+// Custom Components
+import Home from './Home';
 
 function App() {
   const [theme, setTheme] = useState({
@@ -38,27 +40,18 @@ function App() {
   };
   const muiThemeApp = createMuiTheme(theme);
 
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   return (
     <ThemeProvider theme={muiThemeApp}>
       <CssBaseline />
-      <Container maxWidth="sm">
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>
-              Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn React
-            </a>
-          </header>
-        </div>
-      </Container>
+      <div className="App">
+        <Home mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
+      </div>
     </ThemeProvider>
   );
 }
