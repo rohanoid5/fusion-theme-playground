@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
@@ -10,7 +10,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-const drawerWidth = 240;
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
+const drawerWidth = 300;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,37 +27,69 @@ const useStyles = makeStyles(theme => ({
       flexShrink: 0
     }
   },
-  appBar: {
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth
-    }
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none'
-    }
-  },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth
   },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3)
+  formControl: {
+    margin: theme.spacing(2),
+    minWidth: 200
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
   }
 }));
 
 const OptionList = ['Chart', 'Plot', 'Axis', 'Legend'];
+const ScopeList = ['Global', 'Column2D', 'Pie2D', 'Area'];
 
 const NavBar = ({ mobileOpen, handleDrawerToggle }) => {
   const classes = useStyles();
   const theme = useTheme();
 
+  const [state, setState] = useState({
+    scope: 'Global'
+  });
+
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = useState(0);
+
+  useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+
+  const handleChange = name => event => {
+    setState({
+      ...state,
+      [name]: event.target.value
+    });
+  };
+
   const drawer = (
     <div>
-      <div className={classes.toolbar} />
+      <div className={classes.toolbar}>
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel ref={inputLabel} htmlFor="outlined-input">
+            Please select a scope
+          </InputLabel>
+          <Select
+            native
+            value={state.scope}
+            onChange={handleChange('scope')}
+            labelWidth={labelWidth}
+            inputProps={{
+              name: 'scope',
+              id: 'outlined-input'
+            }}
+          >
+            {ScopeList.map(scope => (
+              <option id={scope} value={scope}>
+                {scope}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
       <Divider />
       <List>
         {OptionList.map((text, index) => (
