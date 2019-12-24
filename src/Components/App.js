@@ -6,11 +6,9 @@ import { createMuiTheme, useTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-// TODO: Create a separate file for this
 import Blue from '@material-ui/core/colors/blue';
 import Green from '@material-ui/core/colors/green';
 
-// Custom Components
 import Home from './Home';
 
 function App() {
